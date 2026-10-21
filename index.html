@@ -1,6 +1,213 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#08090c"><title>AI INCOME OS</title><style>
-:root{color-scheme:dark;--bg:#08090c;--panel:#12141a;--line:#292d36;--muted:#8d95a3;--text:#f3f4f6;--green:#7ce0b0;--red:#ff9292}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px system-ui,-apple-system,sans-serif}.layout{max-width:1180px;margin:auto;padding:26px 20px}.brand{font-weight:800;letter-spacing:.12em;font-size:12px}.brand span{display:inline-grid;place-items:center;width:36px;height:36px;margin-right:9px;border:1px solid #6b7381;border-radius:10px;background:#20232b;font-size:19px}.eyebrow{color:#9ba3b0;letter-spacing:.15em;font-size:10px;font-weight:700;margin:0 0 8px}header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:26px 0}h1{font-size:clamp(24px,4vw,36px);letter-spacing:-.04em;margin:0}p{color:var(--muted)}button{cursor:pointer;border:1px solid #454b58;border-radius:8px;padding:11px 14px;background:#e1e5eb;color:#101217;font-weight:750}.hero{padding:23px;border:1px solid var(--line);border-radius:14px;background:radial-gradient(ellipse at 90% 10%,#343a4844,transparent 40%),#111319;margin-bottom:15px}.hero h2{font-size:clamp(20px,3vw,28px);margin:14px 0 5px}.hero h2 span{color:#9ea7b5}.pill{color:var(--green);font-size:10px;letter-spacing:.1em}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px}.label{font-size:10px;letter-spacing:.1em;color:#a5adba}.value{font-size:clamp(20px,3vw,29px);font-weight:700;margin:14px 0 6px;overflow-wrap:anywhere}.hint{font-size:11px;color:var(--muted)}.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-top:15px}.panel h3{margin:0 0 18px;font-size:17px}.actions{display:grid;gap:9px}.actions button{width:100%;text-align:left;background:#191c23;color:#e8ebf0;border-color:#303540}.actions button span{float:right;color:#aeb6c4}.transactions{margin-top:15px}.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:490px}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid #292d35;font-size:12px}th{font-size:10px;color:#929aa8;letter-spacing:.1em}.amt{text-align:right;font-weight:700}.pos{color:var(--green)}.neg{color:var(--red)}.empty{text-align:center;color:var(--muted);padding:22px}.insight{margin-top:15px}.insight p{line-height:1.7;font-size:13px}.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:16px}.modal.open{display:grid}.form{width:min(100%,430px);background:#12141a;border:1px solid #3a404b;border-radius:14px;padding:22px}.formhead{display:flex;justify-content:space-between;align-items:center}.form h2{font-size:22px;margin:0 0 15px}label{display:block;font-size:11px;color:#bdc4ce;margin:12px 0 6px}input,select{width:100%;padding:12px;border-radius:7px;border:1px solid #353a45;background:#090a0e;color:#fff}.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.end{display:flex;justify-content:end;gap:8px;margin-top:18px}.end .cancel{background:#20232a;color:#eee}.foot{font-size:10px;color:#727b89;margin:25px 0 8px;letter-spacing:.1em}.foot span{float:right}@media(max-width:750px){.layout{padding:17px 13px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card{padding:14px}.grid{grid-template-columns:1fr}header{align-items:start}header button{font-size:11px;padding:10px}.hero{padding:18px}.foot span{float:none;display:block;margin-top:7px}}@media(max-width:360px){.row{grid-template-columns:1fr}}
-</style></head><body><main class="layout"><div class="brand"><span>A</span> AI INCOME OS <small style="color:#8d95a3;font-weight:500"> / MONEY COMMAND CENTER</small></div><header><div><p class="eyebrow">YOUR PERSONAL FINANCE WORKSPACE</p><h1>Money command center</h1><p style="margin:7px 0 0">See what you earn, spend, and keep.</p></div><button id="add">＋ Add transaction</button></header><section class="hero"><div class="pill">● SYSTEM READY · LOCAL MODE</div><h2>Build your income. <span>Track every rupee.</span></h2><p style="margin-bottom:0">A simple money dashboard, made for your phone.</p></section><section class="metrics"><article class="card"><div class="label">NET BALANCE</div><div class="value" id="balance">₹0</div><div class="hint">Income minus expenses</div></article><article class="card"><div class="label">TOTAL INCOME</div><div class="value" id="income">₹0</div><div class="hint">All recorded earnings</div></article><article class="card"><div class="label">TOTAL EXPENSES</div><div class="value" id="expenses">₹0</div><div class="hint">All recorded spending</div></article><article class="card"><div class="label">SAVINGS RATE</div><div class="value" id="rate">0%</div><div class="hint">Income retained</div></article></section><section class="grid"><article class="panel"><p class="eyebrow">MONEY ACTIVITY</p><h3>Recent transactions</h3><div class="tablewrap"><table><thead><tr><th>DETAILS</th><th>TYPE</th><th>DATE</th><th style="text-align:right">AMOUNT</th><th></th></tr></thead><tbody id="rows"><tr><td colspan="5" class="empty">Add your first transaction to begin.</td></tr></tbody></table></div></article><article class="panel"><p class="eyebrow">QUICK ACTIONS</p><h3>Make a move</h3><div class="actions"><button id="incomeBtn">＋ Record income <span>↗</span></button><button id="expenseBtn">− Record expense <span>↗</span></button><button id="exportBtn">⇩ Export records (JSON) <span>↗</span></button><button id="importBtn">⇧ Import / restore (JSON) <span>↗</span></button><input id="importFile" type="file" accept=".json,application/json" hidden></div><div class="insight"><p class="eyebrow">SMART INSIGHT</p><p id="insight">Record income and expenses to see your balance and savings rate.</p></div></article></section><footer class="foot">AI INCOME OS · BUILT FOR EVERYDAY PROGRESS <span>PRIVATE LOCAL DEMO · V1.0</span></footer></main>
-<div class="modal" id="modal"><form class="form" id="form"><div class="formhead"><p class="eyebrow">MONEY ACTIVITY</p><button type="button" id="close" style="padding:4px 10px">×</button></div><h2 id="formTitle">Add transaction</h2><label for="title">What was it for?</label><input id="title" maxlength="80" placeholder="e.g. Freelance payment" required><div class="row"><div><label for="type">Type</label><select id="type"><option value="income">Income</option><option value="expense">Expense</option></select></div><div><label for="amount">Amount (₹)</label><input id="amount" type="number" min="0.01" step=".01" inputmode="decimal" required placeholder="500"></div></div><div class="row"><div><label for="date">Date</label><input id="date" type="date" required></div><div><label for="category">Category</label><select id="category"><option>Work</option><option>Sales</option><option>Business</option><option>Food</option><option>Travel</option><option>Bills</option><option>Shopping</option><option>Other</option></select></div></div><div class="end"><button type="button" class="cancel" id="cancel">Cancel</button><button type="submit">Save transaction</button></div></form></div><script>
-(()=>{const $=id=>document.getElementById(id),KEY='ai-income-os-v1';let data=[];const today=()=>{let d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};const money=n=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:2}).format(n||0);const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch{alert('Browser storage unavailable. Export your records for backup.')}}function render(){let inc=data.filter(x=>x.type==='income').reduce((a,x)=>a+x.amount,0),exp=data.filter(x=>x.type==='expense').reduce((a,x)=>a+x.amount,0),bal=inc-exp,rate=inc?Math.round(bal/inc*100):0;$('balance').textContent=money(bal);$('income').textContent=money(inc);$('expenses').textContent=money(exp);$('rate').textContent=rate+'%';let list=[...data].sort((a,b)=>b.date.localeCompare(a.date)||b.created-a.created);$('rows').innerHTML=list.length?list.map(x=>'<tr><td><b>'+safe(x.title)+'</b><div class="hint">'+safe(x.category)+'</div></td><td>'+x.type+'</td><td>'+safe(x.date)+'</td><td class="amt '+(x.type==='income'?'pos':'neg')+'">'+(x.type==='income'?'+':'−')+money(x.amount)+'</td><td><button data-del="'+safe(x.id)+'" style="padding:4px 7px;background:#1b1e25;color:#ddd">×</button></td></tr>').join(''):'<tr><td colspan="5" class="empty">Add your first transaction to begin.</td></tr>';document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>{if(confirm('Delete this transaction?')){data=data.filter(x=>x.id!==b.dataset.del);save();render()}});$('insight').textContent=!data.length?'Record income and expenses to see your balance and savings rate.':!inc?'You have recorded expenses but no income yet. Add earnings to understand your cash flow.':bal<0?'Your recorded expenses are '+money(-bal)+' above income. Review spending and identify costs you can reduce.':rate<20?'You are retaining '+rate+'% of recorded income. Review your spending and look for practical savings.':'You are retaining '+rate+'% of recorded income. Keep logging transactions to track your progress.'}function open(type){$('form').reset();$('date').value=today();$('type').value=type||'income';$('formTitle').textContent=type==='expense'?'Record expense':type==='income'?'Record income':'Add transaction';$('modal').classList.add('open');$('title').focus()}function close(){$('modal').classList.remove('open')}$('add').onclick=()=>open();$('incomeBtn').onclick=()=>open('income');$('expenseBtn').onclick=()=>open('expense');$('close').onclick=$('cancel').onclick=close;$('modal').onclick=e=>{if(e.target===$('modal'))close()};document.onkeydown=e=>{if(e.key==='Escape')close()};$('form').onsubmit=e=>{e.preventDefault();let title=$('title').value.trim(),amount=Number($('amount').value);if(!title||!Number.isFinite(amount)||amount<=0)return;data.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),title,amount,type:$('type').value,date:$('date').value,category:$('category').value,created:Date.now()});save();render();close()};$('exportBtn').onclick=()=>{let blob=new Blob([JSON.stringify({app:'AI INCOME OS',exportedAt:new Date().toISOString(),transactions:data},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='ai-income-os-'+today()+'.json';a.click();URL.revokeObjectURL(url)};$('importBtn').onclick=()=>$('importFile').click();$('importFile').onchange=async e=>{const file=e.target.files&&e.target.files[0];if(!file)return;try{const parsed=JSON.parse(await file.text());const incoming=Array.isArray(parsed)?parsed:parsed&&Array.isArray(parsed.transactions)?parsed.transactions:null;if(!incoming)throw new Error('JSON format not recognized. Choose an AI INCOME OS backup.');const valid=incoming.every(x=>x&&typeof x.title==='string'&&typeof x.id==='string'&&Number.isFinite(x.amount)&&x.amount>0&&(x.type==='income'||x.type==='expense')&&typeof x.date==='string'&&typeof x.category==='string');if(!valid)throw new Error('Backup has invalid transaction data. Nothing was changed.');if(!confirm('Restore '+incoming.length+' transaction(s)? This will replace the current list on this device. Export a backup first if you want to keep the current list.'))return;data=incoming.map(x=>({...x,created:Number.isFinite(x.created)?x.created:Date.now()}));save();render();alert('Restore complete: '+data.length+' transaction(s).');}catch(err){alert(err.message||'Could not read this backup. Current data was not changed.')}finally{e.target.value=''}};try{let saved=JSON.parse(localStorage.getItem(KEY)||'[]');if(Array.isArray(saved))data=saved.filter(x=>x&&typeof x.title==='string'&&Number.isFinite(x.amount))}catch{}render()})();
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08090c">
+<title>AI INCOME OS</title>
+<style>
+:root{color-scheme:dark;--bg:#08090c;--panel:#12141a;--line:#292d36;--muted:#8d95a3;--text:#f3f4f6;--green:#7ce0b0;--red:#ff9292}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px system-ui,-apple-system,sans-serif}
+.layout{max-width:1180px;margin:auto;padding:26px 20px}
+.brand{font-weight:800;letter-spacing:.12em;font-size:12px}
+.brand span{display:inline-grid;place-items:center;width:36px;height:36px;margin-right:9px;border:1px solid #6b7381;border-radius:10px;background:#20232b;font-size:19px}
+header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:26px 0}
+h1{font-size:clamp(24px,4vw,36px);letter-spacing:-.04em;margin:0}
+p{color:var(--muted)}
+button{cursor:pointer;border:1px solid #454b58;border-radius:8px;padding:11px 14px;background:#e1e5eb;color:#101217;font-weight:750;min-height:42px}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.hero{padding:23px;border:1px solid var(--line);border-radius:14px;background:radial-gradient(ellipse at 90% 10%,#343a4844,transparent 40%),#111319;margin-bottom:15px}
+.hero h2{font-size:clamp(20px,3vw,28px);margin:14px 0 5px}
+.hero h2 span{color:#9ea7b5}
+.pill{color:var(--green);font-size:10px;letter-spacing:.1em}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;min-width:0}
+.label{font-size:10px;letter-spacing:.1em;color:#a5adba}
+.value{font-size:clamp(20px,3vw,29px);font-weight:700;margin:14px 0 6px;overflow-wrap:anywhere}
+.hint{font-size:11px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-top:15px}
+.panel h3{margin:0 0 18px;font-size:17px}
+.actions{display:grid;gap:9px}
+.actions button{width:100%;text-align:left;background:#191c23;color:#e8ebf0;border-color:#303540}
+.actions button span{float:right;color:#aeb6c4}
+.tablewrap{overflow-x:auto;max-width:100%}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{text-align:left;padding:12px 8px;border-bottom:1px solid #292d35;font-size:12px;vertical-align:middle}
+th{font-size:10px;color:#929aa8;letter-spacing:.1em}
+.amt{text-align:right;font-weight:700;white-space:nowrap}
+.pos{color:var(--green)}.neg{color:var(--red)}
+.empty{text-align:center;color:var(--muted);padding:22px}
+.insight{margin-top:15px}.insight p{line-height:1.7;font-size:13px}
+.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:16px;overflow-y:auto;z-index:10}
+.modal.open{display:grid}
+.form{width:min(100%,430px);max-height:calc(100dvh - 32px);overflow-y:auto;background:#12141a;border:1px solid #3a404b;border-radius:14px;padding:22px}
+.formhead{display:flex;justify-content:space-between;align-items:center}
+.form h2{font-size:22px;margin:0 0 15px}
+label{display:block;font-size:11px;color:#bdc4ce;margin:12px 0 6px}
+input,select{width:100%;min-width:0;padding:12px;border-radius:7px;border:1px solid #353a45;background:#090a0e;color:#fff;font:inherit}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.end{display:flex;justify-content:end;gap:8px;margin-top:18px;flex-wrap:wrap}
+.end .cancel{background:#20232a;color:#eee}
+.form-error{color:var(--red);font-size:12px;min-height:18px;margin:10px 0 0}
+.foot{font-size:10px;color:#727b89;margin:25px 0 8px;letter-spacing:.1em}
+.foot span{float:right}
+@media(max-width:750px){.layout{padding:17px 13px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.card{padding:14px}.grid{grid-template-columns:1fr}header{align-items:start;flex-wrap:wrap}header button{font-size:11px;padding:10px}.hero{padding:18px}.foot span{float:none;display:block;margin-top:7px}}
+@media(max-width:380px){.row{grid-template-columns:1fr}.form{padding:16px}.end button{flex:1}}
+@media print{
+ :root{color-scheme:light;--bg:#fff;--panel:#fff;--line:#ccc;--muted:#444;--text:#111}
+ body{background:#fff!important;color:#111!important;font-size:11pt}
+ .layout{max-width:none;padding:0}
+ header button,.hero,.grid>.panel:nth-child(2),.actions,.insight,.modal,.no-print,.foot{display:none!important}
+ .metrics{grid-template-columns:repeat(4,1fr);gap:8px}
+ .card,.panel{background:#fff!important;color:#111!important;border:1px solid #ccc;padding:10px}
+ .label,.hint,p,th{color:#333!important}
+ .value{font-size:16pt;color:#111}
+ .grid{display:block;margin-top:12px}
+ .grid>.panel:first-child{display:block;border:0;padding:0}
+ .tablewrap{overflow:visible}
+ table{min-width:0;width:100%}
+ th,td{color:#111!important;border-bottom:1px solid #ccc;white-space:normal}
+ .amt{white-space:nowrap}
+ body:before{content:"AI INCOME OS — Printable Finance Report";display:block;font-size:18pt;font-weight:700;margin-bottom:8px}
+}
+</style>
+</head>
+<body>
+<main class="layout">
+ <div class="brand"><span>A</span> AI INCOME OS <small style="color:#8d95a3;font-weight:500"> / MONEY COMMAND CENTER</small></div>
+ <header><div><p class="eyebrow">YOUR PERSONAL FINANCE WORKSPACE</p><h1>Money command center</h1><p style="margin:7px 0 0">See what you earn, spend, and keep.</p></div><button id="add">＋ Add transaction</button></header>
+ <section class="hero"><div class="pill">● SYSTEM READY · LOCAL MODE</div><h2>Build your income. <span>Track every rupee.</span></h2><p style="margin-bottom:0">A simple money dashboard, made for your phone.</p></section>
+ <section class="metrics">
+  <article class="card"><div class="label">NET BALANCE</div><div class="value" id="balance">₹0</div><div class="hint">Income minus expenses</div></article>
+  <article class="card"><div class="label">TOTAL INCOME</div><div class="value" id="income">₹0</div><div class="hint">All recorded earnings</div></article>
+  <article class="card"><div class="label">TOTAL EXPENSES</div><div class="value" id="expenses">₹0</div><div class="hint">All recorded spending</div></article>
+  <article class="card"><div class="label">SAVINGS RATE</div><div class="value" id="rate">0%</div><div class="hint">Income retained</div></article>
+ </section>
+ <section class="grid">
+  <article class="panel"><p class="eyebrow">MONEY ACTIVITY</p><h3>Recent transactions</h3><div class="tablewrap"><table><thead><tr><th>DETAILS</th><th>TYPE</th><th>DATE</th><th style="text-align:right">AMOUNT</th><th class="no-print">ACTIONS</th></tr></thead><tbody id="rows"><tr><td colspan="5" class="empty">Add your first transaction to begin.</td></tr></tbody></table></div></article>
+  <article class="panel"><p class="eyebrow">QUICK ACTIONS</p><h3>Make a move</h3><div class="actions">
+   <button id="incomeBtn">＋ Record income <span>↗</span></button><button id="expenseBtn">− Record expense <span>↗</span></button><button id="exportBtn">⇩ Export records (JSON) <span>↗</span></button><button id="importBtn">⇧ Import / restore (JSON) <span>↗</span></button><button id="printBtn">▤ Print finance report <span>↗</span></button><input id="importFile" type="file" accept=".json,application/json" hidden>
+  </div><div class="insight"><p class="eyebrow">SMART INSIGHT</p><p id="insight">Record income and expenses to see your balance and savings rate.</p></div></article>
+ </section>
+ <footer class="foot">AI INCOME OS · BUILT FOR EVERYDAY PROGRESS <span>PRIVATE LOCAL DEMO · V1.1</span></footer>
+</main>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="formTitle">
+ <form class="form" id="form"><div class="formhead"><p class="eyebrow">MONEY ACTIVITY</p><button type="button" id="close" aria-label="Close transaction form" style="padding:4px 10px">×</button></div>
+  <h2 id="formTitle">Add transaction</h2><label for="title">What was it for?</label><input id="title" maxlength="80" placeholder="e.g. Freelance payment" required>
+  <div class="row"><div><label for="type">Type</label><select id="type"><option value="income">Income</option><option value="expense">Expense</option></select></div><div><label for="amount">Amount (₹)</label><input id="amount" type="number" min="0.01" max="1000000000" step=".01" inputmode="decimal" required placeholder="500"></div></div>
+  <div class="row"><div><label for="date">Date</label><input id="date" type="date" required></div><div><label for="category">Category</label><select id="category"><option>Work</option><option>Sales</option><option>Business</option><option>Food</option><option>Travel</option><option>Bills</option><option>Shopping</option><option>Other</option></select></div></div>
+  <p id="formError" class="form-error" role="alert" aria-live="polite"></p><div class="end"><button type="button" class="cancel" id="cancel">Cancel</button><button type="submit" id="saveBtn">Save transaction</button></div>
+ </form>
+</div>
+<script>
+(()=> {
+ 'use strict';
+ const $=id=>document.getElementById(id), KEY='ai-income-os-v1', MAX_RUPEES=1000000000;
+ let data=[], editingId=null, storageAvailable=true;
+ const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+ const money=rupees=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',minimumFractionDigits:2,maximumFractionDigits:2}).format((rupees||0));
+ const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const toPaise=rupees=>Math.round(rupees*100);
+ function validDate(value){if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return false;const d=new Date(value+'T00:00:00Z');return !Number.isNaN(d.getTime())&&d.toISOString().slice(0,10)===value}
+ function validateTransaction(x){
+  if(!x||typeof x!=='object'||Array.isArray(x))return 'A transaction is not an object.';
+  if(typeof x.id!=='string'||!x.id.trim())return 'A transaction has a missing ID.';
+  if(typeof x.title!=='string'||!x.title.trim())return 'A transaction has an empty title.';
+  if(!Number.isFinite(x.amount)||x.amount<=0||x.amount>MAX_RUPEES||!Number.isSafeInteger(toPaise(x.amount)))return 'A transaction has an invalid amount.';
+  if(x.type!=='income'&&x.type!=='expense')return 'A transaction has an invalid type.';
+  if(!validDate(x.date))return 'A transaction has an invalid calendar date.';
+  if(typeof x.category!=='string'||!x.category.trim())return 'A transaction has an empty category.';
+  if(x.created!==undefined&&(!Number.isFinite(x.created)||x.created<0))return 'A transaction has an invalid creation timestamp.';
+  return '';
+ }
+ function validateList(list){
+  if(!Array.isArray(list))return 'Backup must contain a transaction list.';
+  const ids=new Set();
+  for(let i=0;i<list.length;i++){const problem=validateTransaction(list[i]);if(problem)return 'Transaction '+(i+1)+': '+problem;const id=list[i].id.trim();if(ids.has(id))return 'Duplicate transaction ID found. Nothing was imported.';ids.add(id)}
+  return '';
+ }
+ function persist(next){
+  try{localStorage.setItem(KEY,JSON.stringify(next));data=next;storageAvailable=true;return true}
+  catch(err){storageAvailable=false;alert('Could not save changes in this browser. Your current on-screen records were not changed. Check browser storage space/settings and export a backup if possible.');return false}
+ }
+ function totals(){
+  const inc=data.filter(x=>x.type==='income').reduce((a,x)=>a+toPaise(x.amount),0);
+  const exp=data.filter(x=>x.type==='expense').reduce((a,x)=>a+toPaise(x.amount),0);
+  return {inc,exp,bal:inc-exp,rate:inc?Math.round((inc-exp)/inc*100):0}
+ }
+ function render(){
+  const t=totals();$('balance').textContent=money(t.bal/100);$('income').textContent=money(t.inc/100);$('expenses').textContent=money(t.exp/100);$('rate').textContent=t.rate+'%';
+  const list=[...data].sort((a,b)=>b.date.localeCompare(a.date)||(b.created||0)-(a.created||0));
+  $('rows').innerHTML=list.length?list.map(x=>'<tr><td><b>'+safe(x.title)+'</b><div class="hint">'+safe(x.category)+'</div></td><td>'+safe(x.type)+'</td><td>'+safe(x.date)+'</td><td class="amt '+(x.type==='income'?'pos':'neg')+'">'+(x.type==='income'?'+':'−')+money(x.amount)+'</td><td class="no-print"><div style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" data-edit="'+safe(x.id)+'" aria-label="Edit '+safe(x.title)+'" style="padding:7px 9px;background:#20232a;color:#eee">Edit</button><button type="button" data-del="'+safe(x.id)+'" aria-label="Delete '+safe(x.title)+'" style="padding:7px 11px;background:#1b1e25;color:#ddd">Delete</button></div></td></tr>').join(''):'<tr><td colspan="5" class="empty">Add your first transaction to begin.</td></tr>';
+  document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>startEdit(b.dataset.edit));
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>removeTransaction(b.dataset.del));
+  $('insight').textContent=!data.length?'Record income and expenses to see your balance and savings rate.':!t.inc?'You have recorded expenses but no income yet. Add earnings to understand your cash flow.':t.bal<0?'Your recorded expenses are '+money(-t.bal/100)+' above income. Review spending and identify costs you can reduce.':t.rate<20?'You are retaining '+t.rate+'% of recorded income. Review your spending and look for practical savings.':'You are retaining '+t.rate+'% of recorded income. Keep logging transactions to track your progress.';
+ }
+ function open(type){
+  $('form').reset();editingId=null;$('date').value=today();$('type').value=type||'income';$('formTitle').textContent=type==='expense'?'Record expense':type==='income'?'Record income':'Add transaction';$('saveBtn').textContent='Save transaction';$('formError').textContent='';$('modal').classList.add('open');
+  setTimeout(()=>$('title').focus(),50);
+ }
+ function close(){$('modal').classList.remove('open');editingId=null;$('formError').textContent=''}
+ function startEdit(id){
+  const item=data.find(x=>x.id===id);if(!item){alert('This transaction could not be found. Refresh the page and try again.');return}
+  editingId=id;$('form').reset();$('title').value=item.title;$('type').value=item.type;$('amount').value=item.amount;$('date').value=item.date;$('category').value=item.category;$('formTitle').textContent='Edit transaction';$('saveBtn').textContent='Save changes';$('formError').textContent='';$('modal').classList.add('open');setTimeout(()=>$('title').focus(),50)
+ }
+ function removeTransaction(id){
+  const item=data.find(x=>x.id===id);if(!item)return;
+  if(!confirm('Delete "'+item.title.replace(/["']/g,'')+'"? This cannot be undone unless you have a backup.'))return;
+  const next=data.filter(x=>x.id!==id);if(next.length!==data.length-1){alert('Delete stopped because record IDs are not unique. Export a backup and review the data first.');return}
+  if(persist(next))render();
+ }
+ $('add').onclick=()=>open();$('incomeBtn').onclick=()=>open('income');$('expenseBtn').onclick=()=>open('expense');$('close').onclick=$('cancel').onclick=close;
+ $('modal').onclick=e=>{if(e.target===$('modal'))close()};document.onkeydown=e=>{if(e.key==='Escape')close()};
+ $('form').onsubmit=e=>{
+  e.preventDefault();const title=$('title').value.trim(),amount=Number($('amount').value),type=$('type').value,date=$('date').value,category=$('category').value;
+  if(!title){$('formError').textContent='Enter a title for this transaction.';return}
+  if(!Number.isFinite(amount)||amount<=0||amount>MAX_RUPEES||!Number.isSafeInteger(toPaise(amount))){$('formError').textContent='Enter an amount between ₹0.01 and ₹1,000,000,000.';return}
+  if(!validDate(date)){$('formError').textContent='Choose a valid calendar date.';return}
+  if(type!=='income'&&type!=='expense'){$('formError').textContent='Choose income or expense.';return}
+  const old=editingId?data.find(x=>x.id===editingId):null;if(editingId&&!old){$('formError').textContent='This transaction no longer exists. Close and try again.';return}
+  const item={id:old?old.id:Date.now().toString(36)+Math.random().toString(36).slice(2,10),title,amount:Math.round(amount*100)/100,type,date,category,created:old?(old.created||Date.now()):Date.now()};
+  const next=old?data.map(x=>x.id===editingId?item:x):[...data,item];
+  const issue=validateList(next);if(issue){$('formError').textContent=issue;return}
+  if(persist(next)){render();close()}
+ };
+ $('exportBtn').onclick=()=>{
+  try{
+   const backup={app:'AI INCOME OS',version:1,exportedAt:new Date().toISOString(),transactions:data};
+   const blob=new Blob([JSON.stringify(backup,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+   a.href=url;a.download='ai-income-os-'+today()+'.json';a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+   alert('Backup export started. Check your phone’s Downloads folder for the JSON file.');
+  }catch(err){alert('Export failed: '+(err&&err.message?err.message:'browser download is unavailable.'))}
+ };
+ $('importBtn').onclick=()=>$('importFile').click();
+ $('importFile').onchange=async e=>{
+  const file=e.target.files&&e.target.files[0];if(!file)return;
+  try{
+   const parsed=JSON.parse(await file.text()),incoming=Array.isArray(parsed)?parsed:parsed&&Array.isArray(parsed.transactions)?parsed.transactions:null;
+   if(!incoming)throw new Error('JSON format not recognized. Choose an AI INCOME OS backup.');
+   const issue=validateList(incoming);if(issue)throw new Error(issue+' Nothing was changed.');
+   if(!confirm('Restore '+incoming.length+' transaction(s)? This replaces the current list on this device. Export a backup first if you need to keep the current list.'))return;
+   const normalized=incoming.map(x=>({...x,id:x.id.trim(),title:x.title.trim(),category:x.category.trim(),amount:Math.round(x.amount*100)/100,created:Number.isFinite(x.created)?x.created:Date.now()}));
+   if(persist(normalized)){render();alert('Restore complete: '+normalized.length+' transaction(s) saved successfully.')}
+  }catch(err){alert(err&&err.message?err.message:'Could not read this backup. Current data was not changed.')}
+  finally{e.target.value=''}
+ };
+ $('printBtn').onclick=()=>{try{window.print()}catch(err){alert('Could not open the print dialog. Try your browser menu → Print.')}};
+ function load(){
+  let raw;try{raw=localStorage.getItem(KEY)}catch(err){storageAvailable=false;alert('Browser storage could not be read. Existing records may not be available in this browser session. Do not clear site data; use a backup if you have one.');return}
+  if(raw===null)return;
+  try{
+   const saved=JSON.parse(raw);if(!Array.isArray(saved))throw new Error('Saved data is not a transaction list.');
+   const seen=new Set(),valid=[];
+   saved.forEach(x=>{if(validateTransaction(x))return;const id=x.id.trim();if(seen.has(id))return;seen.add(id);valid.push({...x,id,title:x.title.trim(),category:x.category.trim(),amount:Math.round(x.amount*100)/100,created:Number.isFinite(x.created)?x.created:0})});
+   data=valid;
+   if(valid.length!==saved.length)alert('Some saved records were invalid or duplicated and were not loaded. Before making changes, export any records still visible and keep any older backups.');
+  }catch(err){alert('Saved data could not be read safely. It has not been overwritten. Try importing a known-good JSON backup.')}
+ }
+ load();render();
+})();
+</script>
+</body>
+</html>
