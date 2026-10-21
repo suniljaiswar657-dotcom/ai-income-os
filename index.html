@@ -15,6 +15,7 @@ body{margin:0;background:var(--bg);color:var(--text);font:14px system-ui,-apple-
 header{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:26px 0}
 h1{font-size:clamp(24px,4vw,36px);letter-spacing:-.04em;margin:0}
 p{color:var(--muted)}
+.eyebrow{color:#9ba3b0;letter-spacing:.15em;font-size:10px;font-weight:700;margin:0 0 8px}
 button{cursor:pointer;border:1px solid #454b58;border-radius:8px;padding:11px 14px;background:#e1e5eb;color:#101217;font-weight:750;min-height:42px}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .hero{padding:23px;border:1px solid var(--line);border-radius:14px;background:radial-gradient(ellipse at 90% 10%,#343a4844,transparent 40%),#111319;margin-bottom:15px}
@@ -104,7 +105,7 @@ input,select{width:100%;min-width:0;padding:12px;border-radius:7px;border:1px so
 (()=> {
  'use strict';
  const $=id=>document.getElementById(id), KEY='ai-income-os-v1', MAX_RUPEES=1000000000;
- let data=[], editingId=null, storageAvailable=true;
+ let data=[], editingId=null, storageAvailable=true, storageNeedsReview=false;
  const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
  const money=rupees=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',minimumFractionDigits:2,maximumFractionDigits:2}).format((rupees||0));
  const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -127,8 +128,9 @@ input,select{width:100%;min-width:0;padding:12px;border-radius:7px;border:1px so
   for(let i=0;i<list.length;i++){const problem=validateTransaction(list[i]);if(problem)return 'Transaction '+(i+1)+': '+problem;const id=list[i].id.trim();if(ids.has(id))return 'Duplicate transaction ID found. Nothing was imported.';ids.add(id)}
   return '';
  }
- function persist(next){
-  try{localStorage.setItem(KEY,JSON.stringify(next));data=next;storageAvailable=true;return true}
+ function persist(next,replaceReviewedData=false){
+  if(storageNeedsReview&&!replaceReviewedData){alert('Saved data contains invalid or duplicate records. To avoid overwriting them, import a known-good JSON backup first. No changes were saved.');return false}
+  try{localStorage.setItem(KEY,JSON.stringify(next));data=next;storageAvailable=true;storageNeedsReview=false;return true}
   catch(err){storageAvailable=false;alert('Could not save changes in this browser. Your current on-screen records were not changed. Check browser storage space/settings and export a backup if possible.');return false}
  }
  function totals(){
@@ -190,21 +192,21 @@ input,select{width:100%;min-width:0;padding:12px;border-radius:7px;border:1px so
    const issue=validateList(incoming);if(issue)throw new Error(issue+' Nothing was changed.');
    if(!confirm('Restore '+incoming.length+' transaction(s)? This replaces the current list on this device. Export a backup first if you need to keep the current list.'))return;
    const normalized=incoming.map(x=>({...x,id:x.id.trim(),title:x.title.trim(),category:x.category.trim(),amount:Math.round(x.amount*100)/100,created:Number.isFinite(x.created)?x.created:Date.now()}));
-   if(persist(normalized)){render();alert('Restore complete: '+normalized.length+' transaction(s) saved successfully.')}
+   if(persist(normalized,true)){render();alert('Restore complete: '+normalized.length+' transaction(s) saved successfully.')}
   }catch(err){alert(err&&err.message?err.message:'Could not read this backup. Current data was not changed.')}
   finally{e.target.value=''}
  };
  $('printBtn').onclick=()=>{try{window.print()}catch(err){alert('Could not open the print dialog. Try your browser menu → Print.')}};
  function load(){
-  let raw;try{raw=localStorage.getItem(KEY)}catch(err){storageAvailable=false;alert('Browser storage could not be read. Existing records may not be available in this browser session. Do not clear site data; use a backup if you have one.');return}
+  let raw;try{raw=localStorage.getItem(KEY)}catch(err){storageAvailable=false;storageNeedsReview=true;alert('Browser storage could not be read. Existing records may not be available in this browser session. Do not clear site data; use a backup if you have one.');return}
   if(raw===null)return;
   try{
    const saved=JSON.parse(raw);if(!Array.isArray(saved))throw new Error('Saved data is not a transaction list.');
    const seen=new Set(),valid=[];
    saved.forEach(x=>{if(validateTransaction(x))return;const id=x.id.trim();if(seen.has(id))return;seen.add(id);valid.push({...x,id,title:x.title.trim(),category:x.category.trim(),amount:Math.round(x.amount*100)/100,created:Number.isFinite(x.created)?x.created:0})});
    data=valid;
-   if(valid.length!==saved.length)alert('Some saved records were invalid or duplicated and were not loaded. Before making changes, export any records still visible and keep any older backups.');
-  }catch(err){alert('Saved data could not be read safely. It has not been overwritten. Try importing a known-good JSON backup.')}
+   if(valid.length!==saved.length){storageNeedsReview=true;alert('Some saved records were invalid or duplicated and were not loaded. Normal edits are paused to avoid overwriting them. Keep any older backups, then import a known-good JSON backup to replace the damaged list safely.')}
+  }catch(err){storageNeedsReview=true;alert('Saved data could not be read safely. It has not been overwritten. Normal edits are paused. Try importing a known-good JSON backup.')}
  }
  load();render();
 })();
